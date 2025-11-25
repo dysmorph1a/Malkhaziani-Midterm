@@ -1,0 +1,115 @@
+<div class="home-container">
+  <h1>Welcome to User Management</h1>
+  
+  <div class="search-section">
+    <h2>Search Users</h2>
+    <div class="search-box">
+      <input 
+        type="text" 
+        placeholder="Search by name..." 
+        [(ngModel)]="searchQuery" 
+        (input)="searchUsers()"
+        name="searchQuery"
+      />
+    </div>
+    
+    <div *ngIf="filteredUsers.length > 0" class="search-results">
+      <h3>Search Results ({{ filteredUsers.length }})</h3>
+      <div class="user-list">
+        <div *ngFor="let user of filteredUsers" class="user-card">
+          <h4>{{ user.name }}</h4>
+          <p><strong>Email:</strong> {{ user.email }}</p>
+          <p><strong>Age:</strong> {{ user.age }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="forms-container">
+    <div class="form-section">
+      <h2>Register</h2>
+      <form #registerFormRef="ngForm" (ngSubmit)="register()">
+        <div class="form-group">
+          <label for="registerName">Name:</label>
+          <input 
+            type="text" 
+            id="registerName" 
+            name="name" 
+            [(ngModel)]="registerForm.name" 
+            required
+          />
+        </div>
+        
+        <div class="form-group">
+          <label for="registerEmail">Email:</label>
+          <input 
+            type="email" 
+            id="registerEmail" 
+            name="email" 
+            [(ngModel)]="registerForm.email" 
+            required
+          />
+        </div>
+        
+        <div class="form-group">
+          <label for="registerPassword">Password:</label>
+          <input 
+            type="password" 
+            id="registerPassword" 
+            name="password" 
+            [(ngModel)]="registerForm.password" 
+            required
+          />
+        </div>
+        
+        <div class="form-group">
+          <label for="registerAge">Age:</label>
+          <input 
+            type="number" 
+            id="registerAge" 
+            name="age" 
+            [(ngModel)]="registerForm.age" 
+            required
+          />
+        </div>
+        
+        <button type="submit" [disabled]="!registerFormRef.valid">Register</button>
+      </form>
+      
+      <p *ngIf="registerMessage" class="message success">{{ registerMessage }}</p>
+    </div>
+    
+    <div class="form-section">
+      <h2>Login</h2>
+      <form #loginFormRef="ngForm" (ngSubmit)="login()">
+        <div class="form-group">
+          <label for="loginEmail">Email:</label>
+          <input 
+            type="email" 
+            id="loginEmail" 
+            name="loginEmail" 
+            [(ngModel)]="loginForm.email" 
+            required
+          />
+        </div>
+        
+        <div class="form-group">
+          <label for="loginPassword">Password:</label>
+          <input 
+            type="password" 
+            id="loginPassword" 
+            name="loginPassword" 
+            [(ngModel)]="loginForm.password" 
+            required
+          />
+        </div>
+        
+        <button type="submit" [disabled]="!loginFormRef.valid">Login</button>
+      </form>
+      
+      <p *ngIf="loginMessage" class="message" [ngClass]="loginMessage.includes('successful') ? 'success' : 'error'">
+        {{ loginMessage }}
+      </p>
+    </div>
+  </div>
+</div>
